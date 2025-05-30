@@ -1,73 +1,45 @@
-const { Router } = require('express');
-const db = require('../models');
 const jwt = require('jsonwebtoken');
+const Persona = require('../Models/PersonaModel'); // Usa el modelo de Persona
 
-const User = db.user;
-const Role = db.role;
+//Verifico el token enviado en la sesión del usuario
+verifyToken = (req, res, next) => {
+  const token = req.session?.token;
 
+  if (!token) {
+    return res.status(401).send({ message: 'Token no enviado' });
+  }
 
-verifyToken = (req,res,next)=>{
-    let token = req.session.token;
-    if(!token){
-        return res.status(401).send({message: 'No estas enviando el token'});
-    }
-    jwt.verify(token,
-        process.env.jwtSecret,
-        (err, decoded)=>{
-            if(err){
-                return res.status(500).send({message:err});
-            }
-            req.userId = decoded.id;
-            next(); 
-        }
-    )
-}
+  jwt.verify(token, process.env.jwtSecret, (err, decoded) => {
+    if (err) return res.status(403).send({ message: 'Token inválido' });
 
-isModerator = (req,res,next)=>{
-    User.findById(req.userId).exec((err,user)=>{
-        if(err){
-            return res.status(500).send({message:err});
-        }
-        Role.find({_id:{
-            $in: user.roles
-        }}, (err, roles)=>{
-            if(err){
-                return res.status(500).send({message:err});
-            }
-            roles.forEach(element => {
-                if(element.name === 'moderator'){
-                    next();
-                    //return;
-                }
-            });
-            res.status(403).send({message: `Se requiere el rol de moderator`});
-        })
-    })
+    req.userId = decoded.id;
+    next();
+  });
+};
+//Segun busque buenas practicas, es bueno usar async y await para manejar
+// las promesas de manera más limpia y evitarerrores silenciosos
+isCliente = async (req, res, next) => {
+  try {
+    const persona = await Persona.findById(req.userId);
+    if (persona?.rol === 'cliente') return next();
+    return res.status(403).send({ message: 'Se requiere rol de cliente' });
+  } catch (err) {
+    return res.status(500).send({ message: 'Error de servidor' });
+  }
 };
 
-isAdmin = (req,res,next)=>{
-    User.findById(req.userId).exec((err,user)=>{
-        if(err){
-            return res.status(500).send({message:err});
-        }
-        Role.find({_id:{
-            $in: user.roles
-        }}, (err, roles)=>{
-            if(err){
-                return res.status(500).send({message:err});
-            }
-            roles.forEach(element => {
-                if(element.name === 'admin'){
-                    next();
-                    //return;
-                }
-            });
-            res.status(403).send({message: `Se requiere el rol de admin`});
-        })
-    })
+isVendedor = async (req, res, next) => {
+  try {
+    const persona = await Persona.findById(req.userId);
+    if (persona?.rol === 'vendedor') return next();
+    return res.status(403).send({ message: 'Se requiere rol de vendedor' });
+  } catch (err) {
+    return res.status(500).send({ message: 'Error de servidor' });
+  }
 };
-
-const authJwt = {
-    verifyToken, isModerator, isAdmin
-}
-module.exports = authJwt;
+//Exporo las funciones para que puedan ser usadas en las rutas
+module.exports = {
+  verifyToken,
+  isCliente,
+  isVendedor
+};

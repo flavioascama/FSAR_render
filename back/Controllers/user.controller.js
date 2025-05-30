@@ -1,30 +1,15 @@
-const db = require('../models');
-const User = db.user;
+const Persona = require('../Models/PersonaModel');
 
-exports.allAccess = (req,res)=>{
-    // #swagger.tags = ['Test']
-    // #swagger.summary = 'Trae el Contenido Publico'
-    // #swagger.description = 'Some description...'
-    // #swagger.deprecated = true
+exports.publicAccess = (req, res) => {
+  res.status(200).send('Acceso público');
+};
 
-    res.status(200).send('Contenido Public');
-}
+exports.clienteAccess = async (req, res) => {
+  const persona = await Persona.findById(req.userId);
+  res.status(200).send({ message: `Hola cliente ${persona.nombre}` });
+};
 
-exports.onlyUser = (req,res)=>{
-     // #swagger.tags = ['Test']
-    let username = '';
-     User.findById(req.userId).then(data=>{
-        username = data.username;
-        res.status(200).send({message: `Hola ${username}`});
-    });
-}
-
-exports.onlyModerator = (req,res)=>{
-     // #swagger.tags = ['Test']
-    res.status(200).send('Contenido del Moderador');
-}
-
-exports.onlyAdmin = (req,res)=>{
-     // #swagger.tags = ['Test']
-    res.status(200).send('Contenido de Admin');
-}
+exports.vendedorAccess = async (req, res) => {
+  const persona = await Persona.findById(req.userId);
+  res.status(200).send({ message: `Hola vendedor ${persona.nombre}` });
+};
