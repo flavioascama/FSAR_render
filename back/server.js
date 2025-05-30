@@ -1,27 +1,25 @@
 const express = require('express');
-const cookieSession = require('cookie-session'); //Para mantener la sesión del usuario
-const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('./swagger_output.json');
+//const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const multer = require('multer');
-
-
-
+//const multer = require('multer');
+const path = require('path');
 require('dotenv').config();
+
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// ───── FRONTEND ─────
+app.use(express.static(path.join(__dirname, '../front')));
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../front/index.html'));
+});
 
 
-
-
-app.get('/',(req,res)=>{
-    res.send({message:"Bienvenido a mi API"})
-})
-
-app.listen(PORT, ()=>{
-    console.log(`Escuchando en el puerto ${PORT}`);
-})
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Escuchando en el puerto ${PORT}`);
+});
