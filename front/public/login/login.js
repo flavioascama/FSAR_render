@@ -61,7 +61,7 @@ async function handleLogin(event) {
 
 // Login con Google
 function handleGoogleLogin() {
-    window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = "https://fsar-render.onrender.com/auth/google";
 }
 
 

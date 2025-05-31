@@ -17,8 +17,8 @@ exports.createCheckoutSession = async (req, res) => {
         }
       ],
       mode: 'payment',
-      success_url: 'http://localhost:8000/success.html',
-      cancel_url: 'http://localhost:8000/cancel.html'
+      success_url: 'https://fsar-render.onrender.com/success.html',
+      cancel_url: 'https://fsar-render.onrender.com/cancel.html'
     });
 
     res.json({ url: session.url }); // ✅ URL completa
