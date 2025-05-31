@@ -1,39 +1,16 @@
-const db = require('../models');
-const ROLES = db.ROLES;
-const User = db.user;
+const Persona = require('../Models/PersonaModel'); // Jalamos el dato de la base de datos
 
-checkDuplicateEmail = (req,res,next)=>{
-    User.findOne({
-        email: req.body.email
-    }).exec((err,user)=>{
-        if(err){
-            res.status(500).send({message:err});
-        }
-        if(user){
-            res.status(400).send({message:"El email ya esta en uso"});
-        }
-        next();
-    })
-};
-
-checkRolesExisted =(req,res,next)=>{
-    if(req.body.roles){
-        for (let index = 0; index < req.body.roles.length; index++) {
-            const element = req.body.roles[index];
-            if(!ROLES.includes(element)){
-                res.status(400).send({
-                    message: `El rol ${element} no existe en la lista de roles`
-                });
-            }
-        }
-        
+const checkDuplicateEmail = async (req, res, next) => {
+  try {
+    const correo = req.body.email;
+    const usuarioExistente = await Persona.findOne({ correo });
+    if (usuarioExistente) {
+      return res.status(400).send({ message: "El correo ya está en uso." });
     }
     next();
-}
-
-const verifySignUp = {
-    checkDuplicateEmail,
-    checkRolesExisted
+  } catch (err) {
+    res.status(500).send({ message: "Error al verificar el correo." });
+  }
 };
 
-module.exports = verifySignUp;
+module.exports = { checkDuplicateEmail };

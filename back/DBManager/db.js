@@ -9,6 +9,4 @@ const conectarDB = () => {
       process.exit(1);
     });
 };
-
-
 module.exports = conectarDB;

@@ -1,56 +1,34 @@
-const mongoose = require('mongoose');
 const Producto = require('../Models/ProductoModel');
-const conectarDB = require('../DBManager/db');
-
 
 class ProductoImpl {
   insertar(datos) {
-    return conectarDB().then(() => {
-      const producto = new Producto(datos);
-      return producto.save();
-    }).then((resultado) => {
-      mongoose.disconnect();
-      return resultado;
-    }).catch((error) => {
-      console.error("Error al insertar producto:", error);
-      mongoose.disconnect();
-    });
+    const producto = new Producto(datos);
+    return producto.save().catch(err => console.error("Error al insertar producto:", err));
   }
+
   buscarPorId(id) {
-    return conectarDB().then(() => Producto.findById(id)).then((resultado) => {
-      mongoose.disconnect();
-      return resultado;
-    }).catch((error) => {
-      console.error("Error al buscar producto:", error);
-      mongoose.disconnect();
+    return Producto.findById(id).catch(err => {
+      console.error("Error al buscar producto:", err);
     });
   }
+
   actualizar(id, nuevosDatos) {
-    return conectarDB().then(() => Producto.findByIdAndUpdate(id, nuevosDatos, { new: true })).then((resultado) => {
-      mongoose.disconnect();
-      return resultado;
-    }).catch((error) => {
-      console.error("Error al actualizar producto:", error);
-      mongoose.disconnect();
+    return Producto.findByIdAndUpdate(id, nuevosDatos, { new: true }).catch(err => {
+      console.error("Error al actualizar producto:", err);
     });
   }
+
   eliminar(id) {
-    return conectarDB().then(() => Producto.findByIdAndDelete(id)).then((resultado) => {
-      mongoose.disconnect();
-      return resultado;
-    }).catch((error) => {
-      console.error("Error al eliminar producto:", error);
-      mongoose.disconnect();
+    return Producto.findByIdAndDelete(id).catch(err => {
+      console.error("Error al eliminar producto:", err);
     });
   }
+
   listarTodos() {
-    return conectarDB().then(() => Producto.find()).then((resultado) => {
-      mongoose.disconnect();
-      return resultado;
-    }).catch((error) => {
-      console.error("Error al listar productos:", error);
-      mongoose.disconnect();
+    return Producto.find().catch(err => {
+      console.error("Error al listar productos:", err);
     });
   }
 }
+
 module.exports = new ProductoImpl();

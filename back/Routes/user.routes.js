@@ -1,4 +1,4 @@
-const { verifyToken, isCliente, isVendedor } = require('../middlewares/authJwt');
+const { verifyToken, isCliente, isVendedor } = require('../Middleware/authJwt');
 const controller = require('../Controllers/user.controller');
 
 module.exports = (app) => {

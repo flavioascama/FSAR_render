@@ -1,75 +1,33 @@
-
-const mongoose = require('mongoose');
-const conectarDB = require('../DBManager/db');
 const Cliente = require('../Models/ClienteModel');
 
 class ClienteImpl {
   insertar(datos) {
-    return conectarDB()
-      .then(() => {
-        const cliente = new Cliente(datos);
-        return cliente.save();
-      })
-      .then((resultado) => {
-        mongoose.disconnect();
-        return resultado;
-      })
-      .catch((error) => {
-        console.error("Error al insertar cliente:", error);
-        mongoose.disconnect();
-      });
+    const cliente = new Cliente(datos);
+    return cliente.save().catch(err => console.error("Error al insertar cliente:", err));
   }
 
   buscarPorId(id) {
-    return conectarDB()
-      .then(() => Cliente.findById(id).populate('historialCompras'))
-      .then((resultado) => {
-        mongoose.disconnect();
-        return resultado;
-      })
-      .catch((error) => {
-        console.error("Error al buscar cliente:", error);
-        mongoose.disconnect();
-      });
+    return Cliente.findById(id).populate('historialCompras').catch(err => {
+      console.error("Error al buscar cliente:", err);
+    });
   }
 
   actualizar(id, nuevosDatos) {
-    return conectarDB()
-      .then(() => Cliente.findByIdAndUpdate(id, nuevosDatos, { new: true }))
-      .then((resultado) => {
-        mongoose.disconnect();
-        return resultado;
-      })
-      .catch((error) => {
-        console.error("Error al actualizar cliente:", error);
-        mongoose.disconnect();
-      });
+    return Cliente.findByIdAndUpdate(id, nuevosDatos, { new: true }).catch(err => {
+      console.error("Error al actualizar cliente:", err);
+    });
   }
 
   eliminar(id) {
-    return conectarDB()
-      .then(() => Cliente.findByIdAndDelete(id))
-      .then((resultado) => {
-        mongoose.disconnect();
-        return resultado;
-      })
-      .catch((error) => {
-        console.error("Error al eliminar cliente:", error);
-        mongoose.disconnect();
-      });
+    return Cliente.findByIdAndDelete(id).catch(err => {
+      console.error("Error al eliminar cliente:", err);
+    });
   }
 
   listarTodos() {
-    return conectarDB()
-      .then(() => Cliente.find())
-      .then((resultado) => {
-        mongoose.disconnect();
-        return resultado;
-      })
-      .catch((error) => {
-        console.error("Error al listar clientes:", error);
-        mongoose.disconnect();
-      });
+    return Cliente.find().catch(err => {
+      console.error("Error al listar clientes:", err);
+    });
   }
 }
 
