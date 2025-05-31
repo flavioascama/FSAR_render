@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página cliente</title>
+    <title>Lista de Vendedores</title>
+    <link rel="stylesheet" href="vendedores.css">
 </head>
 <body>
-    <h1 id="bienvenida">Hola cliente</h1>
+    <div class="container">
+        <header class="header">
+            <h1 id="bienvenida">Vendedores Disponibles</h1>
+            <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+        </header>
 
-    <!-- Botón para cerrar sesión -->
-    <button id="logoutBtn">Cerrar sesión</button>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Cargando vendedores...</p>
+        </div>
+
+        <div class="vendedores-grid" id="vendedoresGrid">
+            <!-- Los vendedores se cargarán aquí dinámicamente -->
+        </div>
+
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <p>Error al cargar los vendedores. Por favor, intenta de nuevo.</p>
+            <button id="retryBtn" class="retry-btn">Reintentar</button>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="../../public/logout.js"></script>
-    <script src="cliente.js"></script> <!-- Script personalizado -->
+    <script src="vendedores.js"></script>
 </body>
 </html>

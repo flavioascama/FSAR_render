@@ -42,7 +42,7 @@ const authRoutes = require('./Routes/auth.routes');
 const userRoutes = require('./Routes/user.routes');
 
 app.use('/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api', userRoutes);
 
 // ───── Middleware para proteger carpeta PRIVATE ─────
 app.use('/private', async (req, res, next) => {

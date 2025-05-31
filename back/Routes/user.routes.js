@@ -8,6 +8,6 @@ module.exports = (app) => {
   });
 
   //app.get('/api/test/publico', controller.publicAccess);
-  app.get('/api/test/cliente', [verifyToken, isCliente], controller.clienteAccess);
-  app.get('/api/test/vendedor', [verifyToken, isVendedor], controller.vendedorAccess);
+  //app.get('/clientes', [verifyToken, isCliente], controller.clienteAccess);
+  app.get('/vendedores', [verifyToken, isVendedor], controller.listarVendedores);
 };
