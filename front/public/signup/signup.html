@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="signup-card">
+            <button class="back-btn" onclick="goBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.42-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Volver al login
+            </button>
+
+            <div class="logo">
+                <h1>Crear Cuenta</h1>
+                <p>Únete a nuestra comunidad</p>
+            </div>
+
+            <!-- Selector de tipo de usuario -->
+            <div class="user-type-selector">
+                <div class="user-type-option" data-type="buyer" onclick="selectUserType('buyer')">
+                    <div class="icon">🛒</div>
+                    <h3>Comprador</h3>
+                    <p>Explora y compra productos increíbles</p>
+                </div>
+                <div class="user-type-option" data-type="seller" onclick="selectUserType('seller')">
+                    <div class="icon">🏪</div>
+                    <h3>Vendedor</h3>
+                    <p>Vende tus productos al mundo</p>
+                </div>
+            </div>
+
+            <form id="signupForm" onsubmit="handleSignUp(event)">
+                <!-- Campos básicos -->
+                <div class="form-section">
+                    <h3 class="section-title">Información Personal</h3>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Nombre completo *</label>
+                        <input type="text" id="fullName" required>
+                        <div class="field-hint">Ingresa tu nombre y apellido</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo electrónico *</label>
+                        <input type="email" id="email" required>
+                        <div class="field-hint">Te enviaremos la confirmación aquí</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Teléfono *</label>
+                        <input type="tel" id="phone" required>
+                        <div class="field-hint">Para contactarte sobre tus pedidos</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña *</label>
+                        <input type="password" id="password" required>
+                        <div class="field-hint">Mínimo 8 caracteres</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar contraseña *</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para compradores -->
+                <div id="buyerFields" class="form-section conditional-fields" disabled>
+                    <h3 class="section-title">Información de Comprador</h3>
+                    
+                    <div class="form-group">
+                        <label for="address">Dirección de entrega</label>
+                        <input type="text" id="address" placeholder="Calle, número, distrito">
+                        <div class="field-hint">Donde quieres recibir tus compras</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate">Fecha de nacimiento</label>
+                        <input type="date" id="birthDate">
+                    </div>
+                </div>
+
+                <!-- Campos específicos para vendedores -->
+                <div id="sellerFields" class="form-section conditional-fields">
+                    <h3 class="section-title">Información de Negocio</h3>
+                    
+                    <div class="form-group">
+                        <label for="businessName">Nombre del negocio *</label>
+                        <input type="text" id="businessName">
+                        <div class="field-hint">Como aparecerá en tu tienda</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessType">Tipo de negocio *</label>
+                        <select id="businessType">
+                            <option value="">Seleccionar...</option>
+                            <option value="individual">Persona individual</option>
+                            <option value="company">Empresa constituida</option>
+                            <option value="cooperative">Cooperativa</option>
+                            <option value="startup">Startup</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taxId">RUC/DNI *</label>
+                        <input type="text" id="taxId" placeholder="20123456789">
+                        <div class="field-hint">Para facturación y pagos</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessAddress">Dirección del negocio *</label>
+                        <input type="text" id="businessAddress">
+                        <div class="field-hint">Dirección fiscal o de operaciones</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Categoría principal *</label>
+                        <select id="category">
+                            <option value="">Seleccionar...</option>
+                            <option value="electronics">Electrónicos y tecnología</option>
+                            <option value="clothing">Ropa y accesorios</option>
+                            <option value="home">Hogar y jardín</option>
+                            <option value="food">Alimentos y bebidas</option>
+                            <option value="books">Libros y medios</option>
+                            <option value="sports">Deportes y fitness</option>
+                            <option value="beauty">Belleza y cuidado personal</option>
+                            <option value="automotive">Automotriz</option>
+                            <option value="handmade">Productos artesanales</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessDescription">Descripción del negocio</label>
+                        <textarea id="businessDescription" rows="3" placeholder="Cuéntanos sobre tu negocio..."></textarea>
+                        <div class="field-hint">Ayuda a los compradores a conocerte mejor</div>
+                    </div>
+                </div>
+
+                <!-- Términos y condiciones -->
+                <div class="form-section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            Acepto los <a href="#" target="_blank">términos y condiciones</a> y la 
+                            <a href="#" target="_blank">política de privacidad</a>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="newsletter">
+                        <label for="newsletter">
+                            Quiero recibir ofertas especiales y noticias por email
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="signupBtn" disabled>
+                    <span class="btn-text">Crear Cuenta</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>o</span>
+            </div>
+
+            <div class="link">
+                <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="signup.js"></script>
+</body>
+</html>

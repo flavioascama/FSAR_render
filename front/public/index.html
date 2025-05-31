@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+     <div class="link">
+                <p>Click para iniciar sesion: <a href="public/login/login.html">Iniciar sesion</a></p> <!-- Link a la pagina de registro -->
+    </div>
+    <script>
+    // Al cargar el index
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+        const res = await fetch('/auth/check', {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const result = await res.json();
+
+        if (result.loggedIn && result.user?.rol) {
+            if (result.user.rol === 'cliente') {
+            window.location.href = '/private/cliente/cliente.html';
+            } else if (result.user.rol === 'vendedor') {
+            window.location.href = '/private/vendedor/vendedor.html';
+            }
+        }
+        } catch (error) {
+        console.error('No se pudo verificar sesión:', error);
+        }
+    });
+    </script>
+
+</body>
+</html>
