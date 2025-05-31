@@ -20,7 +20,7 @@ async function verificarUsuario() {
 
         const result = await response.json();
 
-        if (result.loggedIn && result.user?.rol === 'cliente') {
+        if (result.user?.rol === 'cliente') {
             const h1 = document.getElementById('bienvenida');
             h1.textContent = `Hola ${result.user.nombre} - Vendedores Disponibles`;
         } else {
