@@ -171,9 +171,9 @@ async function handleSignUp(event) {
             showSuccessMessage('¡Cuenta creada exitosamente!');
             setTimeout(() => {
                 if (formData.rol === 'cliente') {
-                    window.location.href = '/cliente/cliente.html';
+                    window.location.href = '/private/cliente/cliente.html';
                 } else {
-                    window.location.href = '/vendedor/vendedor.html';
+                    window.location.href = '/private/vendedor/vendedor.html';
                 }
             }, 1500);
         } else {
