@@ -47,7 +47,6 @@ async function cargarVendedores() {
         // Hacer petición al backend para obtener la lsita de vendedores
         const response = await fetch('/api/listaVendedores', {
             method: 'GET',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json' //esto sirve para...
             }
