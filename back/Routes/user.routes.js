@@ -7,7 +7,5 @@ module.exports = (app) => {
     next();
   });
 
-  //app.get('/api/test/publico', controller.publicAccess);
-  //app.get('/clientes', [verifyToken, isCliente], controller.clienteAccess);
-  app.get('/vendedores', [verifyToken, isVendedor], controller.listarVendedores);
+  app.get('/vendedores', [verifyToken, isCliente], controller.listarVendedores);
 };

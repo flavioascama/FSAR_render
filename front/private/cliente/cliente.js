@@ -1,4 +1,3 @@
-// vendedores.js
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Verificar el nombre de usuario y rol
@@ -83,9 +82,9 @@ function mostrarVendedores(vendedores) {
     grid.innerHTML = vendedores.map(vendedor => {
         // Obtener la primera letra del nombre de la tienda para el ícono
         const inicial = vendedor.nombreTienda ? vendedor.nombreTienda.charAt(0).toUpperCase() : 'V';
-        
+        //onclick="verProductosVendedor(${vendedor.id}, '${vendedor.nombreTienda}')"
         return `
-            <div class="vendedor-card" onclick="verProductosVendedor(${vendedor.id}, '${vendedor.nombreTienda}')">
+            <div class="vendedor-card" >
                 <div class="vendedor-info">
                     <div class="vendedor-icon">${inicial}</div>
                     <h3 class="vendedor-name">${vendedor.nombreTienda || 'Tienda sin nombre'}</h3>
@@ -111,20 +110,9 @@ function mostrarMensajeVacio() {
     `;
     grid.style.display = 'grid';
 }
-
+//Aun no esta implementado
 function verProductosVendedor(vendedorId, nombreTienda) {
     // Redirigir a la página de productos del vendedor
     // Puedes pasar el ID del vendedor como parámetro en la URL
     window.location.href = `/cliente/productos?vendedor=${vendedorId}&tienda=${encodeURIComponent(nombreTienda)}`;
-}
-
-// Función auxiliar para manejar errores de red
-function manejarErrorRed(error) {
-    console.error('Error de red:', error);
-    
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        return 'Error de conexión. Verifica tu conexión a internet.';
-    }
-    
-    return 'Error al conectar con el servidor. Intenta de nuevo más tarde.';
 }
