@@ -15,6 +15,7 @@ exports.listarVendedores = async (req, res) => {
     res.status(200).json(vendedores);
   } catch (error) {
     console.error('Error al listar vendedores:', error);
-    res.status(500).json({ message: 'Error en el servidor' });
+     next(error);
+    //res.status(500).json({ message: 'Error en el servidor' });
   }
 };
