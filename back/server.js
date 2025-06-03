@@ -70,10 +70,8 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '../front/public/index.html'));
 });
 
-//CAPURAR ERORES:
-app.use((err, req, res, next) => {
-  console.error('Error capturado:', err.stack || err);
-  res.status(500).json({ mensaje: 'Error interno del servidor', detalle: err.message });
+process.on('uncaughtException', (err) => {
+  console.error('Excepción no capturada:', err);
 });
 
 
