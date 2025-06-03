@@ -7,5 +7,6 @@ module.exports = (app) => {
     next();
   });
 
-  app.get('/vendedores', [verifyToken, isCliente], controller.listarVendedores);
+  //Para poder listar los vendedores en la pagina principal del cliente, pero verifico si es cliente
+  app.get('/listaVendedores', [verifyToken, isCliente], controller.listarVendedores);
 };

@@ -38,18 +38,18 @@ async function cargarVendedores() {
     const grid = document.getElementById('vendedoresGrid');
     const errorMessage = document.getElementById('errorMessage');
     
-    // Mostrar loading y ocultar otros elementos
+    // Mostrar loading y ocultar otros elementos (porsiaca)
     loading.style.display = 'flex';
     grid.style.display = 'none';
     errorMessage.style.display = 'none';
     
     try {
-        // Hacer petición al backend para obtener vendedores
-        const response = await fetch('/api/vendedores', {
+        // Hacer petición al backend para obtener la lsita de vendedores
+        const response = await fetch('/api/listaVendedores', {
             method: 'GET',
             credentials: 'include',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' //esto sirve para...
             }
         });
 
