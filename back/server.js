@@ -70,12 +70,8 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '../front/public/index.html'));
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('Excepción no capturada:', err);
-});
-
 
 // ───── Arrancar servidor ─────
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  //console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
