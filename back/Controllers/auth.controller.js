@@ -54,7 +54,7 @@ exports.signin = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: persona.id
+        id: persona._id
       },
       process.env.jwtSecret,
       {

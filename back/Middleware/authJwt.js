@@ -20,7 +20,7 @@ verifyToken = (req, res, next) => {
 // las promesas de manera más limpia y evitarerrores silenciosos
 isCliente = async (req, res, next) => {
   try {
-    const persona = await Persona.findById(req.userId);
+    const persona = await Persona.findById(req.id);
     if (persona?.rol === 'cliente') return next();
     return res.status(403).send({ message: 'Se requiere rol de cliente' });
   } catch (err) {
@@ -30,7 +30,7 @@ isCliente = async (req, res, next) => {
 
 isVendedor = async (req, res, next) => {
   try {
-    const persona = await Persona.findById(req.userId);
+    const persona = await Persona.findById(req.id);
     if (persona?.rol === 'vendedor') return next();
     return res.status(403).send({ message: 'Se requiere rol de vendedor' });
   } catch (err) {
