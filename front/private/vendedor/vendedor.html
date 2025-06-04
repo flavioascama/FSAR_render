@@ -1,18 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina principal</title>
+    <title>Panel Vendedor</title>
+    <link rel="stylesheet" href="vendedor.css">
 </head>
 <body>
-    <h1 id="bienvenida">Hola Vendedor</h1>
-    <!-- Botón para cerrar sesión -->
-    <button id="logoutBtn">Cerrar sesión</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 id="bienvenida">Hola Vendedor</h1>
+            <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="opciones-grid">
+                
+                <!-- Opción: Agregar Producto -->
+                <div class="opcion-card" onclick="window.location.href='productos/agregarProducto.html'">
+                    <div class="opcion-icon">📦</div>
+                    <h3>Agregar Producto</h3>
+                    <p>Añade nuevos productos a tu tienda</p>
+                </div>
+
+                <!-- Opción: Ver Pedidos -->
+                <div class="opcion-card" onclick="window.location.href='pedidos/verPedidos.html'">
+                    <div class="opcion-icon">📋</div>
+                    <h3>Ver Pedidos</h3>
+                    <p>Revisa los pedidos de tus clientes</p>
+                </div>
+
+                <!-- Opción: Mis Productos -->
+                <div class="opcion-card" onclick="window.location.href='productos/misProductos.html'">
+                    <div class="opcion-icon">🛍️</div>
+                    <h3>Mis Productos</h3>
+                    <p>Gestiona tu catálogo de productos</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
 
     <!-- Scripts -->
     <script src="../../public/logout.js"></script>
-    <script src="vendedor.js"></script> <!-- Script personalizado -->
-    
+    <script src="vendedor.js"></script>
 </body>
 </html>

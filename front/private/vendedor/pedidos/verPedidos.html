@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Pedidos</title>
+    <link rel="stylesheet" href="verPedidos.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Mis Pedidos</h1>
+            <button onclick="window.location.href='../vendedor.html'" class="back-btn">← Volver</button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Indicador de carga -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando pedidos...</p>
+            </div>
+
+            <!-- Mensaje de estado -->
+            <div id="message" class="message hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Filtros simples -->
+            <div class="filtros">
+                <select id="filtro-estado">
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="procesando">Procesando</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="entregado">Entregado</option>
+                </select>
+                <button id="btn-actualizar" class="btn-actualizar">🔄 Actualizar</button>
+            </div>
+
+            <!-- Lista de pedidos -->
+            <div id="pedidos-lista" class="pedidos-lista">
+                <!-- Los pedidos se cargarán aquí dinámicamente -->
+            </div>
+
+        </div>
+    </main>
+
+    <script src="verPedidos.js"></script>
+</body>
+</html>

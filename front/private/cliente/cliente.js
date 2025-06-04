@@ -45,7 +45,7 @@ async function cargarVendedores() {
     
     try {
         // Hacer petición al backend para obtener la lsita de vendedores
-        const response = await fetch('/api/listaVendedores', {
+        const response = await fetch('/api/cliente/listaVendedores', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json' //esto sirve para...
@@ -83,12 +83,12 @@ function mostrarVendedores(vendedores) {
         const inicial = vendedor.nombreTienda ? vendedor.nombreTienda.charAt(0).toUpperCase() : 'V';
         //onclick="verProductosVendedor(${vendedor.id}, '${vendedor.nombreTienda}')"
         return `
-            <div class="vendedor-card" >
+            <div class="vendedor-card" onclick="verProductosVendedor('${vendedor._id}', '${vendedor.nombreTienda}')">
                 <div class="vendedor-info">
                     <div class="vendedor-icon">${inicial}</div>
                     <h3 class="vendedor-name">${vendedor.nombreTienda || 'Tienda sin nombre'}</h3>
                     <p class="vendedor-subtitle">Ver productos disponibles</p>
-                    <button class="ver-productos-btn" onclick="event.stopPropagation(); verProductosVendedor(${vendedor.id}, '${vendedor.nombreTienda}')">
+                    <button class="ver-productos-btn" onclick="event.stopPropagation(); verProductosVendedor(${vendedor._id}, '${vendedor.nombreTienda}')">
                         Ver Productos
                     </button>
                 </div>
@@ -112,6 +112,5 @@ function mostrarMensajeVacio() {
 //Aun no esta implementado
 function verProductosVendedor(vendedorId, nombreTienda) {
     // Redirigir a la página de productos del vendedor
-    // Puedes pasar el ID del vendedor como parámetro en la URL
-    window.location.href = `/cliente/productos?vendedor=${vendedorId}&tienda=${encodeURIComponent(nombreTienda)}`;
+    window.location.href = `/private/cliente/listaProductos.html?vendedor=${encodeURIComponent(vendedorId)}`;
 }

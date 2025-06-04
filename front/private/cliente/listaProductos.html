@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos del Vendedor</title>
+    <!-- Enlaces a archivos CSS y JS externos -->
+    <link rel="stylesheet" href="listaProducto.css">
+</head>
+<body>
+    <!-- Header de la página -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <button class="back-button" onclick="volverAtras()">
+                    ← Volver
+                </button>
+                
+                <div class="carrito-widget" onclick="toggleCarrito()">
+                    🛒 Carrito
+                    <span id="carrito-contador" class="carrito-contador hidden">0</span>
+                </div>
+            </div>
+            
+            <h1 class="title">Productos del Vendedor</h1>
+            <div id="vendedor-info" class="vendedor-info">
+                <span id="vendedor-id"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Indicador de carga -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando productos...</p>
+            </div>
+
+            <!-- Mensajes de error o información -->
+            <div id="message" class="message hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Grid de productos -->
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se renderizarán aquí dinámicamente -->
+            </div>
+        </div>
+    </main>
+    <!-- Modal del carrito -->
+    <div id="carrito-modal" class="carrito-modal">
+        <div class="carrito-contenido">
+            <div class="carrito-header">
+                <h2 class="carrito-titulo">Mi Carrito</h2>
+                <button class="btn-cerrar" onclick="toggleCarrito()">×</button>
+            </div>
+            
+            <div id="carrito-items">
+                <div class="carrito-vacio">
+                    <p>Tu carrito está vacío</p>
+                </div>
+            </div>
+            
+            <div id="carrito-total" class="carrito-total hidden">
+                <div class="carrito-total-precio">
+                    Total: <span id="total-precio">S/ 0.00</span>
+                </div>
+            </div>
+            <button id="btn-comprar" class="btn-comprar hidden" onclick="comprarProductos()">Comprar</button>
+        </div>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script src="listaProducto.js"></script>
+</body>
+</html>

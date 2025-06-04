@@ -5,7 +5,6 @@ let validationTimeouts = {};
 
 // Configuración de la aplicación
 const CONFIG = {
-    GOOGLE_CLIENT_ID: 'TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
     API_BASE_URL: '/api',
     REDIRECT_URLS: {
         login: '/login.html',
@@ -23,7 +22,6 @@ const CONFIG = {
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
-    initGoogleAuth();
 });
 
 // Inicializar la aplicación
@@ -33,15 +31,6 @@ function initializeApp() {
     if (oauthData) {
         populateOAuthData(JSON.parse(oauthData));
     }
-    
-    // Limpiar cualquier sesión previa si ya está logueado
-    const token = localStorage.getItem('authToken');
-    if (token && isValidToken(token)) {
-        // Ya está logueado, redirigir al dashboard
-        redirectToDashboard();
-        return;
-    }
-    
     // Mostrar animación de entrada
     animateSignupCard();
 }
@@ -56,7 +45,6 @@ function setupEventListeners() {
         switch(input.type) {
             case 'email':
                 input.addEventListener('blur', validateEmail);
-                input.addEventListener('input', debounce(checkEmailAvailability, 1000));
                 break;
             case 'password':
                 input.addEventListener('input', validatePassword);
@@ -114,12 +102,12 @@ function toggleConditionalFields(type) {
     
     // Mostrar el correspondiente
     setTimeout(() => {
-        if (type === 'buyer') {
+        if (type === 'comprador') {
             buyerFields.classList.add('show');
-            setRequiredFields('buyer');
-        } else if (type === 'seller') {
+            setRequiredFields('comprador');
+        } else if (type === 'vendedor') {
             sellerFields.classList.add('show');
-            setRequiredFields('seller');
+            setRequiredFields('vendedor');
         }
     }, 100);
 }
@@ -131,7 +119,7 @@ function setRequiredFields(userType) {
         field.removeAttribute('required');
     });
     
-    if (userType === 'seller') {
+    if (userType === 'vendedor') {
         // Campos requeridos para vendedores
         document.getElementById('businessName').setAttribute('required', '');
         document.getElementById('businessType').setAttribute('required', '');
@@ -191,7 +179,7 @@ async function handleSignUp(event) {
 
 function collectFormData() {
     const formData = {
-        rol: selectedUserType === 'buyer' ? 'cliente' : 'vendedor', 
+        rol: selectedUserType === 'comprador' ? 'cliente' : 'vendedor', 
         nombre: document.getElementById('fullName').value.trim(), 
         correo: document.getElementById('email').value.trim().toLowerCase(), 
         telefono: document.getElementById('phone').value.trim(), 
@@ -199,23 +187,17 @@ function collectFormData() {
     };
 
     // Agregar campos específicos según tipo de usuario
-    if (selectedUserType === 'buyer') {
+    if (selectedUserType === 'comprador') {
         formData.direccionEntrega = document.getElementById('address').value.trim(); 
         formData.fechaNacimiento = document.getElementById('birthDate').value; 
 
-        // formData.cupones = []
-        // formData.historialCompras = []
-
-    } else if (selectedUserType === 'seller') {
+    } else if (selectedUserType === 'vendedor') {
         formData.nombreTienda = document.getElementById('businessName').value.trim(); 
         formData.tipoNegocio = document.getElementById('businessType').value; 
         formData.rucDni = document.getElementById('taxId').value.trim(); 
         formData.direccionNegocio = document.getElementById('businessAddress').value.trim(); 
         formData.categoriaPrincipal = document.getElementById('category').value; 
 
-        // formData.businessDescription = document.getElementById('businessDescription').value.trim();
-        // formData.productos = []
-        // formData.cupones = []
     }
 
     return formData;
@@ -242,7 +224,7 @@ function validateCompleteForm() {
     });
     
     // Validar campos específicos según tipo de usuario
-    if (selectedUserType === 'seller') {
+    if (selectedUserType === 'vendedor') {
         const sellerFields = ['businessName', 'businessType', 'taxId', 'businessAddress', 'category'];
         sellerFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
@@ -377,49 +359,8 @@ function validateTaxId(event) {
     return isValid;
 }
 
-// Verificar disponibilidad de email
-async function checkEmailAvailability(event) {
-    const email = event.target.value.trim().toLowerCase();
-    
-    if (!email || !validateEmail(event)) return;
-    
-    try {
-        const response = await checkUserExists(email);
-        
-        if (response.exists) {
-            setFieldValidation('email', false, 'Este email ya está registrado');
-        } else {
-            setFieldValidation('email', true, '');
-        }
-    } catch (error) {
-        console.error('Error verificando email:', error);
-    }
-}
 
-// Funciones de API
-async function registerUser(userData) {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData)
-    });
-    
-    return await response.json();
-}
 
-async function checkUserExists(email) {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/auth/check-email`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email })
-    });
-    
-    return await response.json();
-}
 
 // Manejo de estados de UI
 function setFieldValidation(fieldId, isValid, message) {
@@ -571,36 +512,6 @@ function goBack() {
     window.location.href = "http://localhost:8000/login/login.html";
 }
 
-function redirectToDashboard() {
-    const userType = localStorage.getItem('userType');
-    const dashboardUrl = userType === 'seller' ? '/seller-dashboard' : '/buyer-dashboard';
-    window.location.href = dashboardUrl;
-}
-
-// Inicialización de Google Auth
-function initGoogleAuth() {
-    if (typeof gapi === 'undefined') {
-        loadGoogleAPI();
-        return;
-    }
-    
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: CONFIG.GOOGLE_CLIENT_ID,
-        }).then(function() {
-            console.log('Google Auth inicializado correctamente');
-        }).catch(function(error) {
-            console.error('Error inicializando Google Auth:', error);
-        });
-    });
-}
-
-function loadGoogleAPI() {
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/platform.js';
-    script.onload = initGoogleAuth;
-    document.head.appendChild(script);
-}
 
 // Poblar datos OAuth si existen
 function populateOAuthData(oauthData) {

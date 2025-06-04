@@ -4,7 +4,9 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const Persona = require('./Models/PersonaModel');
+const cookieParser = require('cookie-parser');
+
+
 require('dotenv').config();
 
 require('./Config/passport');
@@ -23,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
   console.error("Error al conectar a MongoDB:", err);
   process.exit(1);
 });
-
+app.use(cookieParser());
 // ───── Middleware ─────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,9 +42,11 @@ app.use(passport.session());
 // ───── Rutas API ─────
 const authRoutes = require('./Routes/auth.routes');
 const userRoutes = require('./Routes/user.routes');
+const pagoRts = require('./Routes/pagoRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api/pagos', pagoRts);
 
 // ───── Middleware para proteger carpeta PRIVATE ─────
 app.use('/private', async (req, res, next) => {
@@ -73,5 +77,5 @@ app.get('/', (_req, res) => {
 
 // ───── Arrancar servidor ─────
 app.listen(PORT, () => {
-  //console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

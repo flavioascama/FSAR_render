@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>¡Gracias por tu compra!</title>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+  <h1>¡Gracias por tu compra!</h1>
+  <a href="/private/cliente/cliente.html">Ver mis pedidos</a>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      
+      try {
+        const res = await fetch('/api/pagos/registrar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            direccion: "Av. Siempre Viva 742",
+            telefono: "987654321",
+            total: 150.00,
+            nombres: "Homer Simpson"
+          })
+        });
+        const result = await res.json();
+        console.log('Pedido guardado:', result);
+      } catch (err) {
+        console.error('Error al registrar el pedido:', err);
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

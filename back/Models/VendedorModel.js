@@ -13,6 +13,6 @@ const vendedorSchema = new mongoose.Schema({
 });
 
 // Igual que el anterior, extendemos desde Persona
-const Vendedor = Persona.discriminator('Vendedor', vendedorSchema);
+const Vendedor = Persona.discriminator('vendedor', vendedorSchema);
 
 module.exports = Vendedor;

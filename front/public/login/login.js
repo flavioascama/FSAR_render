@@ -4,7 +4,6 @@ let isLoading = false;
 // Al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
-    initGoogleAuth();
     animateLoginCard();
 });
 

@@ -2,7 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const controller = require('../Controllers/auth.controller');
 const verifySignUp = require('../Middleware/verifySignUp');
-const { isAuthenticated } = require('../Middleware/authenticated');
 const jwt = require('jsonwebtoken');
 const Persona = require('../Models/PersonaModel');
 
@@ -75,6 +74,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+
 //esta ruta es para verificar si el usuario está autenticado
 router.post('/signup', [verifySignUp.checkDuplicateEmail], controller.signup);
 //esta ruta es para iniciar sesión
@@ -82,4 +82,30 @@ router.post('/signin', controller.signin);
 //esta ruta es para cerrar sesión
 router.post('/logout', controller.signout);
 
+router.get('/cliente/datos', (req, res) => {
+  try {
+    // Verificar si hay sesión activa
+    if (req.session && req.session.userId) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          id: req.session.userId,
+          // Puedes agregar más datos si los necesitas
+          rol: req.session.userRole || null
+        }
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: 'No hay cliente autenticado'
+      });
+    }
+  } catch (error) {
+    console.error('Error al obtener datos del cliente:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error del servidor'
+    });
+  }
+});
 module.exports = router;

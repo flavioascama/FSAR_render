@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const pedidoClienteSchema = new mongoose.Schema({
   clienteId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
   productosPorTienda: [{
-    tiendaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendedor' },
+    tiendaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Persona' },
     productos: [{
       productoId: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
       cantidad: { type: Number, required: true, min: 1 }

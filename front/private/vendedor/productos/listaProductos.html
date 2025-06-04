@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos del Vendedor</title>
+    <!-- Enlaces a archivos CSS y JS externos -->
+    <link rel="stylesheet" href="listaProducto.css">
+</head>
+<body>
+    <!-- Header de la página -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">Productos del Vendedor</h1>
+            <div id="vendedor-info" class="vendedor-info">
+                <span id="vendedor-id"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Indicador de carga -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando productos...</p>
+            </div>
+
+            <!-- Mensajes de error o información -->
+            <div id="message" class="message hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Grid de productos -->
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se renderizarán aquí dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Script JavaScript -->
+    <script src="listaProducto.js"></script>
+</body>
+</html>

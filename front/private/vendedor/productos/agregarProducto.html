@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="agregarProducto.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Agregar Nuevo Producto</h1>
+            <button onclick="window.location.href='../vendedor.html'" class="back-btn">← Volver</button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Mensaje de estado -->
+            <div id="message" class="message hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Formulario -->
+            <form id="producto-form" class="form-container">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto *</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe tu producto..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio (S/) *</label>
+                    <input type="number" id="precio" name="precio" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen"> URL imagen</label>
+                    <input type="url" id="imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg" required>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria">
+                        <option value="">Seleccionar categoría</option>
+                        <option value="electronica">Electrónica</option>
+                        <option value="ropa">Ropa</option>
+                        <option value="hogar">Hogar</option>
+                        <option value="deportes">Deportes</option>
+                        <option value="libros">Libros</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" onclick="window.location.href='vendedor.html'" class="btn-cancelar">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-guardar">
+                        Guardar Producto
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="agregarProducto.js"></script>
+</body>
+</html>

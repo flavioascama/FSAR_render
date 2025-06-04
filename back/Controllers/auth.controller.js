@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
     }
 
     return res.status(201).json({ success: true, data: resultado });
-    
+
   } catch (error) {
     console.error('Error en registro:', error);
     return res.status(500).json({ message: 'Error al crear cuenta' });
@@ -64,11 +64,25 @@ exports.signin = async (req, res) => {
       }
     );
 
+    res.cookie('userInfo', JSON.stringify({
+      id: persona._id,
+      nombre: persona.nombre,
+      rol: persona.rol
+    }), {
+      httpOnly: false,  // Accesible desde JavaScript
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
     req.session.token = token;
+    req.session.userId = persona._id;
+    req.session.userRole = persona.rol;
     return res.status(200).json({
       success: true,
       data: {
         id: persona._id,
+        token: token,
         nombre: persona.nombre,
         rol: persona.rol
       }
@@ -86,7 +100,7 @@ exports.signout = (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'No se pudo cerrar sesión' });
     }
-    res.clearCookie('connect.sid'); // nombre por defecto del cookie de sesión
+    res.clearCookie('connect.sid'); // borra el dato de inicio de sesion pero no el carrito
     return res.status(200).json({ message: 'Sesión cerrada correctamente' });
   });
 };

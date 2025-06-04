@@ -1,5 +1,4 @@
 const Persona = require('../Models/PersonaModel'); // Jalamos el dato de la base de datos
-
 const checkDuplicateEmail = async (req, res, next) => {
   try {
     const correo = req.body.email;

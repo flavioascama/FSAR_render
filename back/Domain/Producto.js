@@ -6,6 +6,7 @@ class Producto {
     this.precio = precio;
     this.vendedorId = vendedorId;
     this.categoria = categoria;
+    this.imagen = null; // URL de la imagen del producto
   }
 }
 module.exports = Producto;  

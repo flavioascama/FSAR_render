@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Productos</title>
+    <link rel="stylesheet" href="misProductos.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Mis Productos</h1>
+            <div class="header-actions">
+                <button onclick="window.location.href='agregarProducto.html'" class="btn-agregar">
+                    + Agregar Producto
+                </button>
+                <button onclick="window.location.href='../vendedor.html'" class="back-btn">← Volver</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Indicador de carga -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando productos...</p>
+            </div>
+
+            <!-- Mensaje de estado -->
+            <div id="message" class="message hidden">
+                <p id="message-text"></p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filtros">
+                <select id="filtro-categoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="electronica">Electrónica</option>
+                    <option value="ropa">Ropa</option>
+                    <option value="hogar">Hogar</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="libros">Libros</option>
+                    <option value="otros">Otros</option>
+                </select>
+                <button id="btn-actualizar" class="btn-actualizar">🔄 Actualizar</button>
+            </div>
+
+            <!-- Grid de productos -->
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div id="modal-eliminar" class="modal hidden" style="display: none;">
+        <div class="modal-content">
+            <h3>¿Eliminar producto?</h3>
+            <p>Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button id="btn-cancelar-eliminar" class="btn-cancelar" type="button">Cancelar</button>
+                <button id="btn-confirmar-eliminar" class="btn-eliminar" type="button">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="misProductos.js"></script>
+</body>
+</html>
