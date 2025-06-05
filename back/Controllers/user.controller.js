@@ -87,20 +87,39 @@ exports.listasHistorialDePedidos = async (req, res) => {
   }
 };
 
-///SIN IMPLEMENTAR
+//DUDO ACA PERO CON FE
 exports.listarPedidos = async (req, res) => {
   try {
-    const vendedorId = req.userId; // Obtener el ID del vendedor desde el token
-    const pedidos = await PedidoCliente.find({ 'productosPorTienda.tiendaId': vendedorId })
-      .populate('clienteId', 'nombre') // Obtener el nombre del cliente
-      .populate('productosPorTienda.productos.productoId'); // Obtener los productos de cada tienda
+    const vendedorId = req.userId; // ID del vendedor autenticado
 
-    res.status(200).json(pedidos);
+    // Buscar solo los pedidos que contienen productos de este vendedor
+    const pedidos = await PedidoCliente.find({ 'productosPorTienda.tiendaId': vendedorId })
+      .populate('clienteId', 'nombre') // nombre del cliente
+      .populate('productosPorTienda.productos.productoId'); // detalles de productos
+
+    // Filtrar productosPorTienda para que solo retorne los que pertenecen a este vendedor
+    const pedidosFiltrados = pedidos.map(pedido => {
+      const productosDelVendedor = pedido.productosPorTienda.filter(pt => pt.tiendaId.toString() === vendedorId.toString());
+
+      return {
+        _id: pedido._id,
+        cliente: pedido.clienteId?.nombre || 'Cliente no identificado',
+        direccion: pedido.direccion,
+        telefono: pedido.telefono,
+        nombres: pedido.nombres,
+        fecha: pedido.createdAt,
+        productosPorTienda: productosDelVendedor,
+        total: productosDelVendedor.reduce((acc, t) => acc + t.subtotal, 0)
+      };
+    });
+
+    res.status(200).json(pedidosFiltrados);
   } catch (error) {
-    console.error('Error al listar pedidos:', error);
+    console.error('Error al listar pedidos del vendedor:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
+
 
 exports.registrarPedido = async (req, res) => {
   try {
