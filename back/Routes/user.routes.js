@@ -13,7 +13,7 @@ routerUsers.use((req, res, next) => {
 routerUsers.delete('/vendedor/eliminarProducto/:id', [verifyToken, isVendedor], controller.eliminarProducto); //
 routerUsers.get('/vendedor/misProductos', [verifyToken, isVendedor],controller.listarProductos); //
 routerUsers.put('/vendedor/guardarProducto', [verifyToken, isVendedor], controller.guardarProducto); //
-routerUsers.put('/vendedor/pedidos', [verifyToken, isVendedor], controller.listarPedidos);
+routerUsers.get('/vendedor/pedidos', [verifyToken, isVendedor], controller.listarPedidos);
 //routerUsers.get('/vendedor/misPedidos', [verifyToken, isVendedor], controller.listarPedidos); //
 //Rutas para que use el cliente
 routerUsers.get('/cliente/productos/:id', controller.listarProductos); //
