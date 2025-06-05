@@ -16,7 +16,7 @@ exports.createCheckoutSession = async (req, res) => {
             product_data: { name: product.name },
             unit_amount: product.price
           },
-          quantity: product.quantity || 1, // Aseguramos que quantity sea un número
+          quantity: product.quantity || 1, 
         }
       ],
       mode: 'payment',
@@ -24,7 +24,7 @@ exports.createCheckoutSession = async (req, res) => {
       cancel_url: 'http://localhost:8000/private/cliente/cancel.html',
     });
 
-    res.json({ url: session.url }); // ✅ URL completa
+    res.json({ url: session.url }); // URL completa
   } catch (error) {
     console.error('Error en Stripe:', error);
     res.status(500).json({ error: 'No se pudo crear sesión' });
