@@ -509,7 +509,7 @@ function isValidToken(token) {
 
 // Navegación
 function goBack() {
-    window.location.href = "http://localhost:8000/login/login.html";
+    window.location.href = "https://fsar-render.onrender.com/login/login.html";
 }
 
 
