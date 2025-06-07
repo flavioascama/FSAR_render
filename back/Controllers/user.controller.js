@@ -87,22 +87,27 @@ exports.listasHistorialDePedidos = async (req, res) => {
 };
 exports.agregarCupones = async (req, res) => {
   try {
-    const { cupones } = req.body; // Debe ser un array de objetos cupón
-    const vendedor = await Vendedor.findById(req.userId);
+    const { cupones } = req.body; // Array de cupones [{codigo, descuento, ...}, ...]
 
+    const vendedor = await Vendedor.findById(req.userId);
     if (!vendedor) {
       return res.status(404).json({ message: 'Vendedor no encontrado' });
     }
 
-    for (const cupon of cupones) {
-      cupon.vendedorId = req.userId; 
+    for (const cuponData of cupones) {
+      cuponData.vendedorId = req.userId;
 
-      // Insertar cupón 
-      const cuponGuardado = await CuponImpl.insertar(cupon);
-      vendedor.cupones.push(cuponGuardado._id);
+      const nuevoCupon = new Cupon({
+        ...cuponData,
+        vendedorId: vendedor._id
+      });
+
+      vendedor.cupones.push(nuevoCupon); // Lo agregamos al array
+      // Insertar en la base de datos
+      await CuponImpl.insertar(cuponData);
     }
 
-    await vendedor.save();
+    await vendedor.save(); 
 
     res.status(201).json({ message: 'Cupones agregados correctamente' });
   } catch (error) {
