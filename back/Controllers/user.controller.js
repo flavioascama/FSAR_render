@@ -85,3 +85,28 @@ exports.listasHistorialDePedidos = async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
+exports.agregarCupones = async (req, res) => {
+  try {
+    const { cupones } = req.body; // Debe ser un array de objetos cupón
+    const vendedor = await Vendedor.findById(req.userId);
+
+    if (!vendedor) {
+      return res.status(404).json({ message: 'Vendedor no encontrado' });
+    }
+
+    for (const cupon of cupones) {
+      cupon.vendedorId = req.userId; 
+
+      // Insertar cupón 
+      const cuponGuardado = await CuponImpl.insertar(cupon);
+      vendedor.cupones.push(cuponGuardado._id);
+    }
+
+    await vendedor.save();
+
+    res.status(201).json({ message: 'Cupones agregados correctamente' });
+  } catch (error) {
+    console.error('Error al agregar cupones:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
