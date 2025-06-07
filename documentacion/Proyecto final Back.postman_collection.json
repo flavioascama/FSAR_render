@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "724427d2-45f7-4930-a01c-22085b79569e",
+		"name": "Proyecto final Back",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43362743",
+		"_collection_link": "https://red-space-743843.postman.co/workspace/Team-Workspace~0b2f7f6f-6e07-4db8-824f-31fee05af784/collection/43362743-724427d2-45f7-4930-a01c-22085b79569e?action=share&source=collection_link&creator=43362743"
+	},
+	"item": [
+		{
+			"name": "iniciarSesion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"chubystorelatam@gmail.com\",\r\n  \"password\": \"Flavio12345\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fsar-render.onrender.com/auth/signin",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarPedidosCliente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/pedidos/historial",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"pedidos",
+						"historial"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarVendedores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/cliente/listaVendedores",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"cliente",
+						"listaVendedores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarProductosPorVendedor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/cliente/productos/683a329680bb2e372bfb1196",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"cliente",
+						"productos",
+						"683a329680bb2e372bfb1196"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cerrarSesion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/auth/logout",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregarProducto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"PRUEBA Iphone\",\r\n  \"descripcion\": \"Teléfono no inteligente con cámara de 108MP\",\r\n  \"precio\": 999.90,\r\n  \"categoria\": \"electronica\",\r\n  \"imagen\": \"xiaomi12.jpg\",\r\n  \"vendedorId\": \"683e73c461dd7e7609a26b20\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/vendedor/guardarProducto",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"vendedor",
+						"guardarProducto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eliminarProducto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/vendedor/eliminarProducto/6840e64c71e93eb7ffa3af38",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"vendedor",
+						"eliminarProducto",
+						"6840e64c71e93eb7ffa3af38"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarMisProductosVendedor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/vendedor/misProductos",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"vendedor",
+						"misProductos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agreagarCupones",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"cupones\": [\r\n    {\r\n      \"codigo\": \"DESCUENTO10\",\r\n      \"descuento\": 10,\r\n      \"limiteUso\": 100,\r\n      \"condicionMinimoCompra\": 50\r\n    },\r\n    {\r\n      \"codigo\": \"PRIMERACOMPRA15\",\r\n      \"descuento\": 15,\r\n      \"limiteUso\": 50,\r\n      \"condicionMinimoCompra\": 100\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fsar-render.onrender.com/api/vendedor/agregarCupones",
+					"protocol": "https",
+					"host": [
+						"fsar-render",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"vendedor",
+						"agregarCupones"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
